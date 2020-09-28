@@ -10,6 +10,9 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+let teamMembers = [];
+
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -33,3 +36,76 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+function promptUser() {
+    inquirer.prompt(
+
+        {
+            type: "list",
+            name: "action",
+            message: "What would you like to do?",
+            choices: ["Create Manager", " Create Engineer", "Create Intern", "Build New Team"],
+        },
+    ).then((answer) => {
+        if (answer.action === "Create Manager") {
+            createManager();
+        } else if (answer.action === "Create Engineer") {
+            createEngineer();
+        } else if (answer.action === "Create Intern") {
+            createIntern();
+        } else if (answer.action === "Build New Team") {
+            createBuildNewTeam();
+        }
+
+    })
+
+}
+
+
+function createManager() {
+    inquirer.prompt([
+
+            {
+                type: "input",
+                name: "name",
+                message: "What is the manager's name?",
+            },
+            {
+                type: "input",
+                name: "id",
+                message: "What is the manager's id?",
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "What is the manager's email?",
+            },
+            {
+                type: "input",
+                name: "office",
+                message: "What is the manager's office number?",
+            },
+
+
+        ])
+        .then((answer) => {
+            const manager = new Manager(answer.name, answer.id, answer.email, answer.officeNumber);
+            teamMembers.push(manager);
+            promptUser();
+
+        })
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+promptUser();
