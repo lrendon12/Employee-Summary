@@ -38,14 +38,32 @@ let teamMembers = [];
 // for the provided `render` function to work! ```
 
 function promptUser() {
-    inquirer.prompt(
-
+    inquirer.prompt([
         {
-            type: "list",
-            name: "action",
-            message: "What would you like to do?",
-            choices: ["Create Manager", " Create Engineer", "Create Intern", "Build New Team"],
+            type: "input",
+            name: "name",
+            message: "What is the employee's name?",
         },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the employee's id?",
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is the employee's email?",
+        },
+        {
+            type: "input",
+            name: "office",
+            message: "What is the manager's office number?",
+        },
+
+    ]
+    
+  
+
     ).then((answer) => {
         if (answer.action === "Create Manager") {
             createManager();
@@ -55,7 +73,7 @@ function promptUser() {
             createIntern();
         } else if (answer.action === "Build New Team") {
             createBuildNewTeam();
-        }
+        }       
 
     })
 
@@ -65,27 +83,7 @@ function promptUser() {
 function createManager() {
     inquirer.prompt([
 
-            {
-                type: "input",
-                name: "name",
-                message: "What is the manager's name?",
-            },
-            {
-                type: "input",
-                name: "id",
-                message: "What is the manager's id?",
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "What is the manager's email?",
-            },
-            {
-                type: "input",
-                name: "office",
-                message: "What is the manager's office number?",
-            },
-
+           
 
         ])
         .then((answer) => {
@@ -95,6 +93,32 @@ function createManager() {
 
         })
 
+}
+function createEngineer() {
+    inquirer.prompt([
+
+            {
+                type: "input",
+                name: "github",
+                message: "What is your Github user name?",
+            },
+
+
+        ])
+        .then((answer) => {
+            const engineer = new Engineer(answer.name, answer.id, answer.email, answer.G);
+            teamMembers.push(Engineer);
+            promptUser();
+
+        })
+
+}
+
+function buildHTML(){
+    let newFile =fs.readFileSync("./lib/main.html")
+    fs.writeFileSync("./lib/team.html", newFile, function (err){
+        if (err) throw err;
+    })
 }
 
 
